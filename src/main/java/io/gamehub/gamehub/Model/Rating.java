@@ -1,7 +1,5 @@
 package io.gamehub.gamehub.Model;
 
-import java.util.List;
-
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -15,15 +13,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Game {
+public class Rating {
     @Id
     private ObjectId id;
-    private String title;
-    private String description;
-    private List<String> systemRequirements;
-    private double price;
+    private int rating;
     @DocumentReference
-    private User author;
-    // @DocumentReference
-    // private User author;
+    private User user;
+    @DocumentReference
+    private Game game;
 }
