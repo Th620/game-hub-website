@@ -24,6 +24,5 @@ public class Game {
     private double price;
     @DocumentReference
     private User author;
-    // @DocumentReference
-    // private User author;
+    private double rating;
 }

@@ -9,14 +9,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Document(collection = "ratings")
+@Document(collection = "purchases")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Rating {
+public class Purchase {
     @Id
     private ObjectId id;
-    private int rating;
+    private String paymentMethod;
     @DocumentReference
     private User user;
     @DocumentReference
