@@ -1,4 +1,4 @@
-package io.gamehub.gamehub.Services;
+package io.gamehub.gamehub.Service;
 
 import java.security.Key;
 import java.util.Date;
@@ -36,8 +36,8 @@ public class JwtService {
         return jwtExpiration;
     }
 
-    // Extract user Id
-    public String extractId(String token) {
+    // Extract user Email
+    public String extractEmail(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
@@ -58,8 +58,8 @@ public class JwtService {
 
     // Check if the JWT is valid
     public boolean isTokenValid(String token, UserDetails userDetails) {
-        final String id = extractId(token);
-        return id.equals(userDetails.getUsername());
+        final String email = extractEmail(token);
+        return email.equals(userDetails.getUsername());
     }
 
     // Check if the JWT expired

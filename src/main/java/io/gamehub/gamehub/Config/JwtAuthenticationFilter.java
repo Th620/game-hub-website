@@ -15,7 +15,7 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import com.mongodb.lang.NonNull;
 
-import io.gamehub.gamehub.Services.JwtService;
+import io.gamehub.gamehub.Service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -52,7 +52,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
         try {
             final String jwt = authHeader.substring(7);
-            final String userId = jwtService.extractId(jwt);
+            final String userId = jwtService.extractEmail(jwt);
 
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
