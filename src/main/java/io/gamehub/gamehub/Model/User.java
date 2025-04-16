@@ -21,6 +21,7 @@ public class User implements UserDetails {
     @Id
     private ObjectId id;
     private String username;
+    private String email;
     private String password;
 
     @Override
@@ -46,5 +47,11 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return false;
+    }
+
+    public User(String username, String email, String password){
+        this.username = username;
+        this.email =email;
+        this.password = password;
     }
 }

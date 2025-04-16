@@ -28,7 +28,6 @@ public class ApplicationConfig {
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
-        userRepository.count();
         return new BCryptPasswordEncoder();
     }
 
