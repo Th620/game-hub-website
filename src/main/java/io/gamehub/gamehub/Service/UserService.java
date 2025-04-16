@@ -7,8 +7,8 @@ import io.gamehub.gamehub.Repository.UserRepository;
 
 public class UserService {
 
-    @Autowired
-    private UserRepository repository;
-    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    // @Autowired
+    // private UserRepository repository;
+    // private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 }

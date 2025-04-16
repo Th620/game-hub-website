@@ -9,6 +9,6 @@ import io.gamehub.gamehub.Model.User;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
-    @Autowired
-    private User userService;
+    // @Autowired
+    // private User userService;
 }

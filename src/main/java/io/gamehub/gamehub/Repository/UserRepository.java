@@ -9,4 +9,5 @@ import io.gamehub.gamehub.Model.User;
 
 public interface UserRepository extends MongoRepository<User, ObjectId> {
     Optional<User> findByEmail(String email);
+    boolean existsByEmail(String email);
 }
