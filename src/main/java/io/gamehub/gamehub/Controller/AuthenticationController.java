@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.gamehub.gamehub.Dto.LoginUserDto;
 import io.gamehub.gamehub.Dto.RegisterUserDto;
 import io.gamehub.gamehub.Model.User;
 import io.gamehub.gamehub.Service.AuthenticationService;
@@ -36,5 +37,20 @@ public class AuthenticationController {
         cookie.setMaxAge(2 * 24 * 60 * 60);
 
         return ResponseEntity.ok(registeredUser);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<User> authenticate(@RequestBody LoginUserDto loginUserDto) {
+        User loggedInUser = authenticationService.authenticate(loginUserDto);
+
+        String jwt = jwtService.generateToken(loggedInUser);
+
+        Cookie cookie = new Cookie("jwt", jwt);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
+        cookie.setPath("/");
+        cookie.setMaxAge(2 * 24 * 60 * 60);
+
+        return ResponseEntity.ok(loggedInUser);
     }
 }
