@@ -1,0 +1,8 @@
+package io.gamehub.gamehub.Exception;
+
+public class UserAlreadyExistsException extends RuntimeException {
+    public UserAlreadyExistsException(String message){
+        super(message);
+    }
+    
+}
