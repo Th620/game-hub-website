@@ -37,7 +37,7 @@ public class AuthenticationService {
                 .orElseThrow(() -> new RuntimeException("User Not Found"));
 
         authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(input.getEmail(), user.getPassword()));
+                .authenticate(new UsernamePasswordAuthenticationToken(input.getEmail(), input.getPassword()));
         return user;
     }
 

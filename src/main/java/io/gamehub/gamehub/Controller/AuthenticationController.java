@@ -12,6 +12,7 @@ import io.gamehub.gamehub.Model.User;
 import io.gamehub.gamehub.Service.AuthenticationService;
 import io.gamehub.gamehub.Service.JwtService;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 
 @RequestMapping("/api/auth")
 @RestController
@@ -25,7 +26,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto) {
+    public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto, HttpServletResponse response) {
         User registeredUser = authenticationService.signup(registerUserDto);
 
         String jwt = jwtService.generateToken(registeredUser);
@@ -36,11 +37,14 @@ public class AuthenticationController {
         cookie.setPath("/");
         cookie.setMaxAge(2 * 24 * 60 * 60);
 
+        response.addCookie(cookie);
+
         return ResponseEntity.ok(registeredUser);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<User> authenticate(@RequestBody LoginUserDto loginUserDto) {
+    public ResponseEntity<User> authenticate(@RequestBody LoginUserDto loginUserDto, HttpServletResponse response) {
+
         User loggedInUser = authenticationService.authenticate(loginUserDto);
 
         String jwt = jwtService.generateToken(loggedInUser);
@@ -50,6 +54,8 @@ public class AuthenticationController {
         cookie.setSecure(true);
         cookie.setPath("/");
         cookie.setMaxAge(2 * 24 * 60 * 60);
+
+        response.addCookie(cookie);
 
         return ResponseEntity.ok(loggedInUser);
     }
