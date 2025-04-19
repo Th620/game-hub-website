@@ -62,7 +62,7 @@ public class JwtService {
     // Check if the JWT is valid
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String email = extractEmail(token);
-        return email.equals(userDetails.getUsername());
+        return email.equals(userDetails.getUsername()) && !isTokenExpired(token);
     }
 
     // Check if the JWT expired
