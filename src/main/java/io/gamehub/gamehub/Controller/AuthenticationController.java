@@ -59,4 +59,18 @@ public class AuthenticationController {
 
         return ResponseEntity.ok(loggedInUser);
     }
+
+    @PostMapping("/logout")
+    public String logout(@RequestBody LoginUserDto loginUserDto, HttpServletResponse response) {
+
+        Cookie cookie = new Cookie("jwt", null);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
+        cookie.setPath("/");
+        cookie.setMaxAge(0);
+
+        response.addCookie(cookie);
+
+        return "redirect:/login";
+    }
 }
