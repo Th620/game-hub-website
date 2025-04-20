@@ -3,6 +3,7 @@ package io.gamehub.gamehub.Controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,5 +25,12 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User currentUser = (User) authentication.getPrincipal();
         return ResponseEntity.ok(currentUser);
+    }
+
+    @DeleteMapping("")
+    public ResponseEntity<?> deleteAccount(Authentication authentication) {
+        String email = authentication.getName();
+        userService.deleteUserByEmail(email);
+        return ResponseEntity.ok("You account has been deleted");
     }
 }
