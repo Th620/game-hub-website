@@ -19,6 +19,7 @@ public class Game {
     @Id
     private ObjectId id;
     private String title;
+    private String genre;
     private String description;
     private List<String> systemRequirements;
     private double price;
