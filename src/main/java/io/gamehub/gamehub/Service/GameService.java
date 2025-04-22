@@ -1,7 +1,9 @@
 package io.gamehub.gamehub.Service;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
 import io.gamehub.gamehub.Model.Game;
@@ -17,5 +19,9 @@ public class GameService {
 
     public List<Game> findAllGames(){
         return gameRepository.findAll();
+    }
+
+    public Optional<Game> findGameById(ObjectId id){
+        return gameRepository.findById(id);
     }
 }
