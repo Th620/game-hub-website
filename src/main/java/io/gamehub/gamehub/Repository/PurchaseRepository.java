@@ -1,5 +1,6 @@
 package io.gamehub.gamehub.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.bson.types.ObjectId;
@@ -12,5 +13,6 @@ public interface PurchaseRepository extends MongoRepository<Purchase, ObjectId> 
 
     Optional<Game> findByGameId(ObjectId gameId);
     boolean existsByGameId(ObjectId gameId);
+    List<Purchase> findByUserId(ObjectId userId);
     
 }
