@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.gamehub.gamehub.Model.Game;
@@ -28,8 +29,12 @@ public class GameController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<Game>> getGames() {
-        return ResponseEntity.ok(gameService.findAllGames());
+    public ResponseEntity<List<Game>> getGames(
+            @RequestParam(required = false) String genre,
+            @RequestParam(required = false) String search) {
+
+        return ResponseEntity.ok(gameService.findGames(search, genre));
+
     }
 
     @GetMapping("/{id}")
@@ -45,6 +50,21 @@ public class GameController {
 
         return game.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    // @GetMapping("")
+    // public ResponseEntity<Game> getGamesByGenre(@PathVariable String id) {
+
+    // if (!ObjectId.isValid(id)) {
+    // ResponseEntity.badRequest().body("Game not found");
+    // }
+
+    // ObjectId objectId = new ObjectId(id);
+
+    // Optional<Game> game = gameService.findGameById(objectId);
+
+    // return game.map(ResponseEntity::ok).orElseGet(() ->
+    // ResponseEntity.notFound().build());
+    // }
 
     @PostMapping("/{id}/purchase")
     public ResponseEntity<Purchase> purchaseGame(@PathVariable String id,

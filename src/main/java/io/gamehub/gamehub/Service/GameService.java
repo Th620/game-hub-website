@@ -28,8 +28,19 @@ public class GameService {
         this.userRepository = userRepository;
     }
 
-    public List<Game> findAllGames() {
-        return gameRepository.findAll();
+    public List<Game> findGames(String search, String genre) {
+
+        if ((genre == null || genre.isEmpty()) && (search == null || search.isEmpty())) {
+            return gameRepository.findAll();
+        } else {
+
+            return genre == null ? gameRepository.findByTitleContainingIgnoreCase(search)
+                    : search == null ? gameRepository.findByTitleContainingIgnoreCaseAndGenre("",
+                            genre.toLowerCase())
+                            : gameRepository.findByTitleContainingIgnoreCaseAndGenre(search,
+                                    genre.toLowerCase());
+        }
+
     }
 
     public Optional<Game> findGameById(ObjectId id) {
@@ -50,4 +61,5 @@ public class GameService {
 
         return purchaseRepository.save(purchase);
     }
+
 }
