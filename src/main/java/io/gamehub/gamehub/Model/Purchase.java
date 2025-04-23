@@ -21,4 +21,11 @@ public class Purchase {
     private User user;
     @DocumentReference
     private Game game;
+
+    public Purchase(String paymentMethod, User user, Game game) {
+        this.paymentMethod = paymentMethod;
+        this.user = user;
+        this.game = game;
+    }
+
 }

@@ -24,6 +24,10 @@ public class User implements UserDetails {
     private String email;
     private String password;
 
+    public ObjectId getId() {
+        return id;
+    }
+
     @Override
     public String getUsername() {
         return email;
