@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import io.gamehub.gamehub.Exception.ResourceNotFoundException;
 import io.gamehub.gamehub.Model.Purchase;
 import io.gamehub.gamehub.Model.User;
 import io.gamehub.gamehub.Repository.PurchaseRepository;
@@ -28,7 +29,7 @@ public class UserService {
 
     public List<Purchase> getPurchaseLog(UserDetails userDetails) {
         User user = userRepository.findByEmail(userDetails.getUsername())
-                .orElseThrow(() -> new RuntimeException("User Not Found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User Not Found"));
 
         List<Purchase> purchases = purchaseRepository.findByUserId(user.getId());
 

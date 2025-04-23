@@ -7,7 +7,8 @@ import org.springframework.stereotype.Service;
 
 import io.gamehub.gamehub.Dto.LoginUserDto;
 import io.gamehub.gamehub.Dto.RegisterUserDto;
-import io.gamehub.gamehub.Exception.UserAlreadyExistsException;
+import io.gamehub.gamehub.Exception.AlreadyExistsException;
+import io.gamehub.gamehub.Exception.ResourceNotFoundException;
 import io.gamehub.gamehub.Model.User;
 import io.gamehub.gamehub.Repository.UserRepository;
 
@@ -26,7 +27,7 @@ public class AuthenticationService {
 
     public User signup(RegisterUserDto input) {
         if (userRepository.existsByEmail(input.getEmail())) {
-            throw new UserAlreadyExistsException("User Exists");
+            throw new AlreadyExistsException("User Exists");
         }
         User user = new User(input.getUsername(), input.getEmail(), passwordEncoder.encode(input.getPassword()));
         return userRepository.save(user);
@@ -34,7 +35,7 @@ public class AuthenticationService {
 
     public User authenticate(LoginUserDto input) {
         User user = userRepository.findByEmail(input.getEmail())
-                .orElseThrow(() -> new RuntimeException("User Not Found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User Not Found"));
 
         authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(input.getEmail(), input.getPassword()));

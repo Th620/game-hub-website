@@ -26,4 +26,5 @@ public class Game {
     @DocumentReference
     private User author;
     private double rating;
+    private int ratingCount;
 }

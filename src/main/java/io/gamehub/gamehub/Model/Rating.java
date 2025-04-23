@@ -17,8 +17,12 @@ public class Rating {
     @Id
     private ObjectId id;
     private int rating;
-    @DocumentReference
-    private User user;
-    @DocumentReference
-    private Game game;
+    private ObjectId userId;
+    private ObjectId gameId;
+
+    public Rating(int rating, ObjectId userId, ObjectId gameId) {
+        this.rating = rating;
+        this.userId = userId;
+        this.gameId = gameId;
+    }
 }
