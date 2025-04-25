@@ -4,11 +4,11 @@ import lombok.Getter;
 
 @Getter
 public class RegisterUserDto {
-    private String username;
+    private String name;
     private String email;
     private String password;
 
-    public RegisterUserDto(String email, String password, String username) {
+    public RegisterUserDto(String email, String password, String name) {
         if (email == null || !isValidEmail(email)) {
             throw new IllegalArgumentException("Invalid email format");
         }
@@ -17,11 +17,11 @@ public class RegisterUserDto {
             throw new IllegalArgumentException("Password must be at least 8 characters long");
         }
 
-        if (username == null || username.length() < 3) {
-            throw new IllegalArgumentException("Username must be at least 2 characters long");
+        if (name == null || name.length() < 3) {
+            throw new IllegalArgumentException("name must be at least 2 characters long");
         }
 
-        this.username = username;
+        this.name = name;
         this.email = email;
         this.password = password;
     }
@@ -40,11 +40,11 @@ public class RegisterUserDto {
         this.password = password;
     }
 
-    public void setUsername(String username) {
-        if (username == null || username.length() < 2) {
-            throw new IllegalArgumentException("Username must be at least 8 characters long");
+    public void setName(String name) {
+        if (name == null || name.length() < 2) {
+            throw new IllegalArgumentException("name must be at least 8 characters long");
         }
-        this.username = username;
+        this.name = name;
     }
 
     private boolean isValidEmail(String email) {

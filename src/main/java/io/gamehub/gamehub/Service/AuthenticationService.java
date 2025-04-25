@@ -29,7 +29,7 @@ public class AuthenticationService {
         if (userRepository.existsByEmail(input.getEmail())) {
             throw new AlreadyExistsException("User Exists");
         }
-        User user = new User(input.getUsername(), input.getEmail(), passwordEncoder.encode(input.getPassword()));
+        User user = new User(input.getName(), input.getEmail(), passwordEncoder.encode(input.getPassword()));
         return userRepository.save(user);
     }
 
