@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 public class User implements UserDetails {
     @Id
     private ObjectId id;
-    private String username;
+    private String name;
     private String email;
     private String password;
 
@@ -58,8 +58,8 @@ public class User implements UserDetails {
         return true;
     }
 
-    public User(String username, String email, String password){
-        this.username = username;
+    public User(String name, String email, String password){
+        this.name = name;
         this.email =email;
         this.password = password;
     }

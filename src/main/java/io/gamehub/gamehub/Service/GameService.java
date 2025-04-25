@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import io.gamehub.gamehub.Exception.AlreadyExistsException;
-import io.gamehub.gamehub.Exception.PurchaseAlreadyExistsException;
 import io.gamehub.gamehub.Exception.ResourceNotFoundException;
 import io.gamehub.gamehub.Model.Game;
 import io.gamehub.gamehub.Model.Purchase;
