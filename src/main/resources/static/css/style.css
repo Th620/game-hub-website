@@ -7,6 +7,8 @@
   font-family: "Poppins", sans-serif;
 }
 
+/* Login / Sign up Pages */
+
 .auth-bg {
   display: flex;
   width: 100%;
@@ -15,6 +17,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: #4c7b8b;
   background-image: url("../images/bg.jpg");
   background-position: center;
   background-size: cover;
@@ -43,7 +46,7 @@
 .auth-bg input {
   border: none;
   outline: none;
-  padding: 6px 8px;
+  padding: 8px 8px;
   background: #2d4d7c;
   border-radius: 2px;
   color: whitesmoke;
@@ -85,24 +88,344 @@
   font-size: 14px;
 }
 
+.auth-bg div {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .green-btn {
   margin-top: 24px;
   border: none;
   background: #4c7b8b;
-  padding: 8px 0px;
+  padding: 10px 0px;
   color: whitesmoke;
   font-weight: 500;
   border-radius: 2px;
 }
 
-@media (min-width: 768px) {
-  #authForm {
-    width: 50%;
-  }
+/* Home Page */
+
+.home {
+  width: 100%;
+  height: 100vh;
+  background-color: #4c7b8b;
+  background-image: url("../images/bg-dark.jpg");
+  background-position: center;
+  background-size: cover;
+}
+
+.home header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #11121722;
+  backdrop-filter: blur(10px);
+  padding: 12px 24px;
+  color: whitesmoke;
+}
+
+.home header nav {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1000;
+}
+
+.home header nav ul {
+  width: fit-content;
+  display: none;
+  font-size: 14px;
+}
+
+.home header nav li {
+  list-style: none;
+}
+
+.home header nav li a {
+  color: whitesmoke;
+  text-decoration: none;
+}
+
+.home header nav li a:hover {
+  color: #efb036;
+}
+
+.logo {
+  font-size: 18px;
+  font-weight: 500;
+}
+.logo span {
+  color: #efb036;
+}
+
+#profile {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 14px;
+  background: #efb036;
+  text-transform: uppercase;
+}
+
+.coin {
+  width: 12px;
+  height: 12px;
+  border-radius: 6px;
+  background: #efb036;
+}
+
+.profile-info {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+}
+
+.balance-container {
+  display: flex;
+  align-items: center;
+  column-gap: 6px;
+  background: #f1faf522;
+  padding: 2px 12px;
+  border-radius: 18px;
+  font-size: 14px;
+}
+
+.hide {
+  display: none !important;
+}
+
+#menu {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #4c7b8b;
+  font-size: large;
+}
+
+#menu ul {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: 16px;
+}
+
+#menu ul li {
+  list-style: none;
+}
+
+#menu ul li a {
+  color: whitesmoke;
+  text-decoration: none;
+}
+
+#menu ul li a:hover {
+  color: #efb036;
+}
+
+.hero {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: 100px;
+  color: whitesmoke;
+  padding: 52px;
+}
+
+.hero h1 {
+  width: fit-content;
+  font-size: 3rem;
+  line-height: 3.5rem;
+}
+
+.hero h1 span {
+  color: #efb036;
+}
+
+.hero .btns-container {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+}
+
+.hero .btns-container .btn {
+  border: none;
+  padding: 8px 16px;
+  color: whitesmoke;
+  font-weight: 500;
+  font-size: 14px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.hero .btns-container #games-btn {
+  background: linear-gradient(130deg, #efb036, #4c7b8b);
+}
+
+.hero .btns-container #my-games-btn {
+  background: transparent;
+  text-decoration: underline;
 }
 
 @media (min-width: 1024px) {
-  #authForm {
-    width: 35%;
+  .auth-bg div {
+    width: 38%;
+  }
+  .home header {
+    padding: 16px 64px;
+  }
+  .home header nav ul {
+    display: flex;
+    align-items: center;
+    column-gap: 24px;
+  }
+  #menu {
+    display: none;
+  }
+  .logo {
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .hero {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 64px;
+    color: whitesmoke;
+    padding: 52px;
+  }
+
+  .hero h1 {
+    font-size: 4rem;
+    line-height: 4.5rem;
+    margin: 64px 0px;
+  }
+
+  .hero h1 span {
+    color: #efb036;
+  }
+
+  .hero .btns-container {
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+  }
+
+  .hero .btns-container .btn {
+    border: none;
+    padding: 8px 16px;
+    color: whitesmoke;
+    font-weight: 500;
+    font-size: 15px;
+    border-radius: 2px;
+  }
+
+  .hero .btns-container #games-btn {
+    background: linear-gradient(130deg, #efb036, #4c7b8b);
+  }
+
+  .hero .btns-container #my-games-btn {
+    background: transparent;
+    text-decoration: underline;
+  }
+}
+
+@media (min-width: 680px) and (max-width: 1024px) {
+  .auth-bg div {
+    width: 50%;
+  }
+  .home header {
+    padding: 16px 64px;
+  }
+  .home header nav ul {
+    display: flex;
+    align-items: center;
+    column-gap: 24px;
+  }
+  #menu {
+    display: none;
+  }
+  .logo {
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .hero {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 100px;
+    color: whitesmoke;
+    padding: 52px;
+  }
+
+  .hero h1 {
+    font-size: 3.5rem;
+    line-height: 4rem;
+  }
+
+  .hero h1 span {
+    color: #efb036;
+  }
+
+  .hero .btns-container {
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+  }
+
+  .hero .btns-container .btn {
+    border: none;
+    padding: 8px 16px;
+    color: whitesmoke;
+    font-weight: 500;
+    font-size: 15px;
+    border-radius: 2px;
+  }
+
+  .hero .btns-container #games-btn {
+    background: linear-gradient(130deg, #efb036, #4c7b8b);
+  }
+
+  .hero .btns-container #my-games-btn {
+    background: transparent;
+    text-decoration: underline;
+  }
+}
+
+@media (min-width: 500px) and (max-width: 680px) {
+  .auth-bg div {
+    width: 80%;
+  }
+  .home header {
+    padding: 16px 24px;
+  }
+  .home header nav ul {
+    display: flex;
+    align-items: center;
+    column-gap: 12px;
+  }
+  #menu {
+    display: none;
   }
 }

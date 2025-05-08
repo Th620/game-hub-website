@@ -1,11 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  test
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <title>Home</title>
+  </head>
+  <body>
+    <main class="home">
+      <div id="menu" class="hide">
+        <ul>
+          <li><a href="">Home</a></li>
+          <li><a href="">Games</a></li>
+          <li><a href="">My Games</a></li>
+          <li><a href="">About</a></li>
+        </ul>
+      </div>
+      <header>
+        <nav>
+          <div class="logo">GAME<span>HUB</span></div>
+          <ul>
+            <li><a href="">Home</a></li>
+            <li><a href="">Games</a></li>
+            <li><a href="">My Games</a></li>
+            <li><a href="">About</a></li>
+          </ul>
+          <div class="profile-info">
+            <div class="balance-container">
+              <div class="coin"></div>
+              <p id="balance"></p>
+            </div>
+            <button type="button" id="profile"></button>
+          </div>
+        </nav>
+      </header>
+      <div class="hero">
+        <h1>
+          Go Beyond <br />
+          the <span class="game">Game</span> <br />Search<span>.</span>
+          Descover<span>.</span>
+          Play
+        </h1>
+        <div class="btns-container">
+          <button type="button" id="games-btn" class="btn">Browse Games</button>
+          <button type="button" id="my-games-btn" class="btn">My Games</button>
+        </div>
+      </div>
+    </main>
+    <script src="./js/script.js"></script>
+  </body>
 </html>

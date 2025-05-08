@@ -6,15 +6,19 @@ if (window.location.pathname === "/login.html") {
     const password = document.getElementById("password").value;
 
     try {
-      await fetch("/api/auth/login", {
+      const response = await fetch("/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ email, password }),
       });
+
+      const data = await response.json();
+
       if (response.ok) {
-        window.location.href = "/index.html";
+        localStorage.setItem("u", JSON.stringify({ name: data.name }));
+        window.location.href = "/";
       }
     } catch (error) {
       console.log(error.message);
@@ -40,11 +44,41 @@ if (window.location.pathname === "/signup.html") {
           },
           body: JSON.stringify({ name, email, password }),
         });
+
+        const data = await response.json();
+
         if (response.ok) {
-          window.location.href = "/index.html";
+          localStorage.setItem("u", JSON.stringify({ name: data.name }));
+          window.location.href = "/";
         }
       } catch (error) {
         console.log(error);
       }
     });
+}
+
+if (
+  window.location.pathname === "/" ||
+  window.location.pathname === "/index.html"
+) {
+  const menu = document.getElementById("menu");
+  const profile = document.getElementById("profile");
+  const balance = document.getElementById("balance");
+
+  balance.innerText = "1200";
+
+  const value = JSON.parse(localStorage.getItem("u"));
+
+  profile.innerText = value.name
+    .split(" ")
+    .map((str) => str[0])
+    .join("");
+
+  profile.addEventListener("click", () => {
+    if (menu.classList.contains("hide")) {
+      menu.classList.remove("hide");
+    } else {
+      menu.classList.add("hide");
+    }
+  });
 }
