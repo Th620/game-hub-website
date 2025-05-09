@@ -23,6 +23,7 @@ public class Game {
     private String description;
     private List<String> systemRequirements;
     private double price;
+    private String img;
     @DocumentReference
     private User author;
     private double rating;

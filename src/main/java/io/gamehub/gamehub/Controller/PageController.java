@@ -20,4 +20,9 @@ public class PageController {
     public String SignupPage() {
         return "signup";
     }
+
+    @GetMapping("/games")
+    public String GamesPage() {
+        return "games";
+    }
 }
