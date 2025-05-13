@@ -203,9 +203,8 @@ const fetchGenres = async () => {
 search.addEventListener("keydown", async (e) => {
   if (e.key === "Enter") {
     e.preventDefault();
-    const params = new URLSearchParams({
-      search: search.value.trim(),
-    });
+    const params = new URLSearchParams(window.location.search);
+    params.set("search", search.value.trim());
     window.location.pathname === "/games.html"
       ? window.history.pushState(
           {
@@ -228,9 +227,8 @@ search.addEventListener("keydown", async (e) => {
 navSearch.addEventListener("keydown", async (e) => {
   if (e.key === "Enter") {
     e.preventDefault();
-    const params = new URLSearchParams({
-      search: navSearch.value.trim(),
-    });
+    const params = new URLSearchParams(window.location.search);
+    params.set("search", navSearch.value.trim());
 
     window.location.pathname === "/games.html"
       ? window.history.pushState(
