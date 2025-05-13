@@ -40,6 +40,13 @@ public class GameController {
 
     }
 
+    @GetMapping("/genres")
+    public ResponseEntity<List<String>> getGenres() {
+
+        return ResponseEntity.ok(gameService.findGenres());
+
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Game> getGame(@PathVariable String id) {
 

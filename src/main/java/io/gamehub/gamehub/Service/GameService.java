@@ -17,6 +17,7 @@ import io.gamehub.gamehub.Repository.GameRepository;
 import io.gamehub.gamehub.Repository.PurchaseRepository;
 import io.gamehub.gamehub.Repository.RatingRepository;
 import io.gamehub.gamehub.Repository.UserRepository;
+import io.gamehub.gamehub.Repository.projection.GenreOnly;
 
 @Service
 public class GameService {
@@ -46,6 +47,10 @@ public class GameService {
                                     genre.toLowerCase().trim());
         }
 
+    }
+
+    public List<String> findGenres() {
+        return gameRepository.findAllBy().stream().map(GenreOnly::getGenre).toList();
     }
 
     public Optional<Game> findGameById(ObjectId id) {
