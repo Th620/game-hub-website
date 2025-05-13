@@ -8,22 +8,23 @@
   </head>
   <body>
     <main class="home">
-      <div id="menu" class="hide">
-        <ul>
-          <li><a href="">Home</a></li>
-          <li><a href="">Games</a></li>
-          <li><a href="">My Games</a></li>
-          <li><a href="">About</a></li>
-        </ul>
-      </div>
       <header>
-        <nav>
-          <div class="logo">GAME<span>HUB</span></div>
+       <nav>
+          <a href="/" class="logo">GAME<span>HUB</span></a>
           <ul>
             <li><a href="">Home</a></li>
             <li><a href="">Games</a></li>
             <li><a href="">My Games</a></li>
-            <li><a href="">About</a></li>
+            <li>
+              <form class="navSearch">
+                <input
+                  type="search"
+                  name="search"
+                  id="search"
+                  placeholder="Search..."
+                />
+              </form>
+            </li>
           </ul>
           <div class="profile-info">
             <div class="balance-container">
@@ -34,6 +35,15 @@
           </div>
         </nav>
       </header>
+      <div id="menu" class="hide">
+        <ul>
+          <li><a href="">Home</a></li>
+          <li><a href="">Games</a></li>
+          <li><a href="">My Games</a></li>
+          <li><a href="">About</a></li>
+        </ul>
+      </div>
+
       <div class="hero">
         <h1>
           Go Beyond <br />

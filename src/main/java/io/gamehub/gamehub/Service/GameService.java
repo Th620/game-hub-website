@@ -39,11 +39,11 @@ public class GameService {
             return gameRepository.findAll();
         } else {
 
-            return genre == null ? gameRepository.findByTitleContainingIgnoreCase(search)
-                    : search == null ? gameRepository.findByTitleContainingIgnoreCaseAndGenre("",
-                            genre.toLowerCase())
-                            : gameRepository.findByTitleContainingIgnoreCaseAndGenre(search,
-                                    genre.toLowerCase());
+            return (genre == null || genre.isEmpty()) ? gameRepository.findByTitleContainingIgnoreCase(search.trim())
+                    : (search == null || search.isEmpty()) ? gameRepository.findByTitleContainingIgnoreCaseAndGenre("",
+                            genre.toLowerCase().trim())
+                            : gameRepository.findByTitleContainingIgnoreCaseAndGenre(search.trim(),
+                                    genre.toLowerCase().trim());
         }
 
     }

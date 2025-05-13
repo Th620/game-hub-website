@@ -10,12 +10,21 @@
     <main class="games">
       <header>
         <nav>
-          <div class="logo">GAME<span>HUB</span></div>
+          <a href="/" class="logo">GAME<span>HUB</span></a>
           <ul>
             <li><a href="">Home</a></li>
             <li><a href="">Games</a></li>
             <li><a href="">My Games</a></li>
-            <li><a href="">About</a></li>
+            <li>
+              <form class="navSearch">
+                <input
+                  type="search"
+                  name="search"
+                  id="navSearch"
+                  placeholder="Search..."
+                />
+              </form>
+            </li>
           </ul>
           <div class="profile-info">
             <div class="balance-container">
@@ -26,8 +35,21 @@
           </div>
         </nav>
       </header>
-      <form>
-        <input type="search" name="search" id="search">
+      <div id="menu" class="hide">
+        <ul>
+          <li><a href="">Home</a></li>
+          <li><a href="">Games</a></li>
+          <li><a href="">My Games</a></li>
+          <li><a href="">About</a></li>
+        </ul>
+      </div>
+      <form class="search">
+        <input
+          type="search"
+          name="search"
+          id="search"
+          placeholder="Search..."
+        />
       </form>
       <div id="gamesContainer"></div>
     </main>

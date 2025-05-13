@@ -83,37 +83,43 @@ profile.addEventListener("click", () => {
 });
 
 // GAMES PAGE
-if (window.location.pathname === "/games.html") {
-  document.addEventListener("DOMContentLoaded", async (e) => {
-    e.preventDefault();
 
-    const gamesContainer = document.getElementById("gamesContainer");
+const search = document.getElementById("search");
+const navSearch = document.getElementById("navSearch");
 
-    try {
-      const response = await fetch("/api/games", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+const params = new URLSearchParams(window.location.search);
 
-      const games = await response.json();
+const fetchGames = async () => {
+  const gamesContainer = document.getElementById("gamesContainer");
 
-      if (games.length) {
-        games.forEach((game) => {
-          const gameElement = document.createElement("div");
-          gameElement.classList.add("game");
-          const imgContainer = document.createElement("div");
-          imgContainer.classList.add("gameImg");
-          const img = document.createElement("img");
-          img.src = `uploads/${game.img}`;
-          img.alt = "game img";
-          imgContainer.appendChild(img);
-          gameElement.appendChild(imgContainer);
-          const gameInfo = document.createElement("div");
-          gameInfo.classList.add("gameInfo");
-          gameInfo.innerHTML = `
+  try {
+    const params = new URLSearchParams(window.location.search);
 
+    const response = await fetch(`/api/games?${params}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const games = await response.json();
+
+    gamesContainer.innerHTML = "";
+
+    if (games.length) {
+      games.forEach((game) => {
+        const gameElement = document.createElement("div");
+        gameElement.classList.add("game");
+        const imgContainer = document.createElement("div");
+        imgContainer.classList.add("gameImg");
+        const img = document.createElement("img");
+        img.src = `uploads/${game.img}`;
+        img.alt = "game img";
+        imgContainer.appendChild(img);
+        gameElement.appendChild(imgContainer);
+        const gameInfo = document.createElement("div");
+        gameInfo.classList.add("gameInfo");
+        gameInfo.innerHTML = `
   <h3>${game.title}</h3>
   
   <div><span class="genre">${game.genre}</span><span class="rating"
@@ -132,19 +138,81 @@ if (window.location.pathname === "/games.html") {
   <p>${game.description}</p>
   <span class="price">${game.price}$</span>
   <button type="button">Buy Game</button>
-
           `;
-          gameElement.appendChild(gameInfo);
-          gamesContainer.appendChild(gameElement);
-        });
-      }
+        gameElement.appendChild(gameInfo);
+        gamesContainer.appendChild(gameElement);
+      });
+    } else {
+      gamesContainer.innerHTML =
+        "<span class='no-games'> No Game Found </span>";
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-      if (response.ok) {
-        localStorage.setItem("u", JSON.stringify({ name: data.name }));
-        window.location.href = "/";
-      }
+search.addEventListener("keydown", async (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    const params = new URLSearchParams({
+      search: search.value.trim(),
+    });
+    window.location.pathname === "/games.html"
+      ? window.history.pushState(
+          {
+            search: search.value.trim(),
+          },
+          "",
+          `?${params}`
+        )
+      : (window.location.href = `/games.html?${params}`);
+
+    navSearch.value = params.get("search").toString();
+    try {
+      await fetchGames();
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
+    }
+  }
+});
+
+navSearch.addEventListener("keydown", async (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    const params = new URLSearchParams({
+      search: navSearch.value.trim(),
+    });
+
+    window.location.pathname === "/games.html"
+      ? window.history.pushState(
+          {
+            search: navSearch.value.trim(),
+          },
+          "",
+          `?${params}`
+        )
+      : (window.location.href = `/games.html?${params}`);
+    search.value = params.get("search").toString();
+
+    try {
+      await fetchGames();
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+});
+
+if (window.location.pathname === "/games.html") {
+  search.value = params.get("search").toString();
+  navSearch.value = params.get("search").toString();
+
+  document.addEventListener("DOMContentLoaded", async (e) => {
+    e.preventDefault();
+
+    try {
+      await fetchGames();
+    } catch (error) {
+      console.log(error.message);
     }
   });
 }
