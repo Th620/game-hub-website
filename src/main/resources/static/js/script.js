@@ -151,6 +151,55 @@ const fetchGames = async () => {
   }
 };
 
+const fetchGenres = async () => {
+  const genresContainer = document.getElementById("genres");
+
+  try {
+    const response = await fetch(`/api/games/genres`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const genres = await response.json();
+
+    if (genres.length) {
+      const params = new URLSearchParams(window.location.search);
+      genres.forEach((genre) => {
+        const genreDiv = document.createElement("button");
+        genreDiv.classList.add("genre");
+        genreDiv.id = genre;
+        genreDiv.innerText = genre;
+        genresContainer.appendChild(genreDiv);
+        genreDiv.addEventListener("click", async (e) => {
+          params.set("genre", genre);
+          const genresElements = document.querySelectorAll(".genre");
+          genresElements.forEach((el) => {
+            if (el.id === genre) {
+              el.classList.add("active");
+            } else if (el.classList.contains("active")) {
+              el.classList.remove("active");
+            }
+          });
+          window.history.pushState(
+            { search: params.get("search"), genre },
+            "",
+            `?${params}`
+          );
+          try {
+            await fetchGames();
+          } catch (error) {
+            console.log(error.message);
+          }
+        });
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 search.addEventListener("keydown", async (e) => {
   if (e.key === "Enter") {
     e.preventDefault();
@@ -167,7 +216,7 @@ search.addEventListener("keydown", async (e) => {
         )
       : (window.location.href = `/games.html?${params}`);
 
-    navSearch.value = params.get("search").toString();
+    navSearch.value = params.get("search");
     try {
       await fetchGames();
     } catch (error) {
@@ -192,7 +241,8 @@ navSearch.addEventListener("keydown", async (e) => {
           `?${params}`
         )
       : (window.location.href = `/games.html?${params}`);
-    search.value = params.get("search").toString();
+
+    search.value = params.get("search");
 
     try {
       await fetchGames();
@@ -203,16 +253,44 @@ navSearch.addEventListener("keydown", async (e) => {
 });
 
 if (window.location.pathname === "/games.html") {
-  search.value = params.get("search").toString();
-  navSearch.value = params.get("search").toString();
+  search.value = params.get("search");
+  navSearch.value = params.get("search");
 
   document.addEventListener("DOMContentLoaded", async (e) => {
     e.preventDefault();
 
     try {
+      await fetchGenres();
       await fetchGames();
+
+      const activeGenre = document.getElementById(params.get("genre"));
+
+      if (activeGenre) {
+        activeGenre.classList.add("active");
+      }
     } catch (error) {
       console.log(error.message);
     }
+  });
+
+  const genresContainer = document.getElementById("genres");
+  genresContainer.addEventListener("click", (e) => {
+    const clicked = e.target.closest(".genre");
+
+    if (!clicked || !genresContainer.contains(clicked)) return;
+
+    const containerRect = genresContainer.getBoundingClientRect();
+
+    const isLeftClick =
+      e.clientX < containerRect.left + containerRect.width / 2;
+
+    const offsetLeft = clicked.offsetLeft - 50;
+    const offsetRight =
+      offsetLeft - genresContainer.clientWidth + clicked.offsetWidth;
+
+    genresContainer.scrollTo({
+      left: isLeftClick ? offsetRight : offsetLeft,
+      behavior: "smooth",
+    });
   });
 }
