@@ -173,17 +173,23 @@ const fetchGenres = async () => {
         genreDiv.innerText = genre;
         genresContainer.appendChild(genreDiv);
         genreDiv.addEventListener("click", async (e) => {
-          params.set("genre", genre);
           const genresElements = document.querySelectorAll(".genre");
           genresElements.forEach((el) => {
             if (el.id === genre) {
-              el.classList.add("active");
+              el.classList.contains("active")
+                ? el.classList.remove("active")
+                : el.classList.add("active");
             } else if (el.classList.contains("active")) {
               el.classList.remove("active");
             }
           });
-          window.history.pushState(
-            { search: params.get("search"), genre },
+          if (params.get("genre") === genre) {
+            params.delete("genre");
+          } else {
+            params.set("genre", genre);
+          }
+          window.history.replaceState(
+            null,
             "",
             `?${params}`
           );
@@ -206,10 +212,8 @@ search.addEventListener("keydown", async (e) => {
     const params = new URLSearchParams(window.location.search);
     params.set("search", search.value.trim());
     window.location.pathname === "/games.html"
-      ? window.history.pushState(
-          {
-            search: search.value.trim(),
-          },
+      ? window.history.replaceState(
+          null,
           "",
           `?${params}`
         )
@@ -231,10 +235,8 @@ navSearch.addEventListener("keydown", async (e) => {
     params.set("search", navSearch.value.trim());
 
     window.location.pathname === "/games.html"
-      ? window.history.pushState(
-          {
-            search: navSearch.value.trim(),
-          },
+      ? window.history.replaceState(
+          null,
           "",
           `?${params}`
         )
