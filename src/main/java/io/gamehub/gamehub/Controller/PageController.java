@@ -8,21 +8,26 @@ public class PageController {
 
     @GetMapping("/index")
     public String homePage() {
-        return "index";
+        return "forward:/index.html";
     }
 
     @GetMapping("/login")
     public String loginPage() {
-        return "login";
+        return "forward:/login.html";
     }
 
     @GetMapping("/signup")
     public String SignupPage() {
-        return "signup";
+        return "forward:/signup.html";
     }
 
     @GetMapping("/games")
     public String GamesPage() {
-        return "games";
+        return "forward:/games.html";
+    }
+
+    @GetMapping("/games/{id}")
+    public String GamePage() {
+        return "forward:/game.html";
     }
 }

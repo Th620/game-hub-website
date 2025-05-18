@@ -1,5 +1,5 @@
 // LOGIN PAGE
-if (window.location.pathname === "/login.html") {
+if (window.location.pathname === "/login") {
   document.getElementById("loginForm").addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -28,7 +28,7 @@ if (window.location.pathname === "/login.html") {
 }
 
 // SIGN UP PAGE
-if (window.location.pathname === "/signup.html") {
+if (window.location.pathname === "/signup") {
   document
     .getElementById("signupForm")
     .addEventListener("submit", async (e) => {
@@ -109,6 +109,12 @@ const fetchGames = async () => {
     if (games.length) {
       games.forEach((game) => {
         const gameElement = document.createElement("div");
+        gameElement.addEventListener("click", (e) => {
+          if (e.target.closest(".buyBtn")) {
+            return;
+          }
+          window.location.href = `/games/${game.id.toString()}`;
+        });
         gameElement.classList.add("game");
         const imgContainer = document.createElement("div");
         imgContainer.classList.add("gameImg");
@@ -137,7 +143,7 @@ const fetchGames = async () => {
   </span></div>
   <p>${game.description}</p>
   <span class="price">${game.price}$</span>
-  <button type="button">Buy Game</button>
+  <button type="button" class="buyBtn">Buy Game</button>
           `;
         gameElement.appendChild(gameInfo);
         gamesContainer.appendChild(gameElement);
@@ -146,6 +152,132 @@ const fetchGames = async () => {
       gamesContainer.innerHTML =
         "<span class='no-games'> No Game Found </span>";
     }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const fetchGame = async ({ id }) => {
+  const gameContainer = document.getElementById("gameContainer");
+
+  try {
+    const response = await fetch(`/api/games/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const game = await response.json();
+
+    const imgContainer = document.createElement("div");
+    imgContainer.classList.add("gameImg");
+    imgContainer.style.backgroundImage = `url('../uploads/${game.img}')`;
+    const infoContainer = document.createElement("div");
+    infoContainer.classList.add("infoContainer");
+    infoContainer.innerHTML = `
+        <h1 class="title">${game.title}</h1>
+        <span class="genre">${game.genre}</span>
+        <p class="desc">${game.description}</p>
+        `;
+
+    const sysRequirements = document.createElement("div");
+    sysRequirements.classList.add("sysRequirements");
+    sysRequirements.innerHTML = "<h3>System requirements</h3>";
+    const list = document.createElement("ul");
+    Object.entries(game.system_requirements).map(([key, value]) => {
+      const li = document.createElement("li");
+      li.innerHTML = `${
+        key === "os" ? key.toUpperCase() : key
+      } : <span>${value}</span>`;
+      list.appendChild(li);
+    });
+
+    const ratingContainer = document.createElement("div");
+    ratingContainer.classList.add("ratingContainer");
+    ratingContainer.innerHTML = `
+    <h3>Rating : </h3>
+    <span id="rating"
+    > ${game.rating} <svg
+      width="12"
+      height="12"
+      viewBox="0 0 100 100"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <polygon
+        points="50,5 61,39 98,39 67,61 78,95 50,75 22,95 33,61 2,39 39,39"
+        fill="#efb036"
+      />
+    </svg>
+  </span>
+  <span class="count">( <span id="count">${game.rating_count}</span> rating )</span>
+  `;
+
+    const rate = document.createElement("div");
+    rate.classList.add("rateBtns");
+    let rating = game.rating || 0;
+    Array.from({ length: 5 }, (_, i) => i + 1).forEach((value, index) => {
+      const btn = document.createElement("button");
+      btn.addEventListener("click", async (e) => {
+        try {
+          if (!rating) {
+            await fetch(`/api/games/${id}/rate`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ rating }),
+            });
+            rating = index + 1;
+            for (let i = 0; i <= index; i++) {
+              document.getElementById(`star${i}`).style.fill = "#efb036";
+            }
+            document.getElementById("rating").innerText =
+              (game.rating * game.rating_count + rating) /
+              (game.rating_count + 1);
+
+            document.getElementById("count").innerText = game.rating_count + 1;
+          } else {
+            return;
+          }
+        } catch (error) {
+          console.log(error.message);
+        }
+      });
+
+      btn.type = "button";
+      btn.innerHTML = `
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 100 100"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <polygon
+            id="star${index}"
+              points="50,5 61,39 98,39 67,61 78,95 50,75 22,95 33,61 2,39 39,39"
+              fill="#${index < rating ? "efb036" : "f5f5f580"}"
+            />
+          </svg>`;
+
+      rate.appendChild(btn);
+    });
+
+    ratingContainer.appendChild(rate);
+
+    const buyContainer = document.createElement("div");
+    buyContainer.classList.add("buyContainer");
+    buyContainer.innerHTML = `
+      <p>${game.price}$</p>
+      <button type="button" class="buyBtn">Buy Game</button>
+    `;
+
+    sysRequirements.appendChild(list);
+    infoContainer.appendChild(sysRequirements);
+    infoContainer.appendChild(ratingContainer);
+    infoContainer.appendChild(buyContainer);
+    gameContainer.appendChild(imgContainer);
+    gameContainer.appendChild(infoContainer);
   } catch (error) {
     console.log(error);
   }
@@ -188,11 +320,7 @@ const fetchGenres = async () => {
           } else {
             params.set("genre", genre);
           }
-          window.history.replaceState(
-            null,
-            "",
-            `?${params}`
-          );
+          window.history.replaceState(null, "", `?${params}`);
           try {
             await fetchGames();
           } catch (error) {
@@ -206,27 +334,25 @@ const fetchGenres = async () => {
   }
 };
 
-search.addEventListener("keydown", async (e) => {
-  if (e.key === "Enter") {
-    e.preventDefault();
-    const params = new URLSearchParams(window.location.search);
-    params.set("search", search.value.trim());
-    window.location.pathname === "/games.html"
-      ? window.history.replaceState(
-          null,
-          "",
-          `?${params}`
-        )
-      : (window.location.href = `/games.html?${params}`);
+if (search) {
+  search.addEventListener("keydown", async (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const params = new URLSearchParams(window.location.search);
+      params.set("search", search.value.trim());
+      window.location.pathname === "/games"
+        ? window.history.replaceState(null, "", `?${params}`)
+        : (window.location.href = `/games?${params}`);
 
-    navSearch.value = params.get("search");
-    try {
-      await fetchGames();
-    } catch (error) {
-      console.log(error.message);
+      navSearch.value = params.get("search");
+      try {
+        await fetchGames();
+      } catch (error) {
+        console.log(error.message);
+      }
     }
-  }
-});
+  });
+}
 
 navSearch.addEventListener("keydown", async (e) => {
   if (e.key === "Enter") {
@@ -234,13 +360,9 @@ navSearch.addEventListener("keydown", async (e) => {
     const params = new URLSearchParams(window.location.search);
     params.set("search", navSearch.value.trim());
 
-    window.location.pathname === "/games.html"
-      ? window.history.replaceState(
-          null,
-          "",
-          `?${params}`
-        )
-      : (window.location.href = `/games.html?${params}`);
+    window.location.pathname === "/games"
+      ? window.history.replaceState(null, "", `?${params}`)
+      : (window.location.href = `/games?${params}`);
 
     search.value = params.get("search");
 
@@ -252,7 +374,7 @@ navSearch.addEventListener("keydown", async (e) => {
   }
 });
 
-if (window.location.pathname === "/games.html") {
+if (window.location.pathname === "/games") {
   search.value = params.get("search");
   navSearch.value = params.get("search");
 
@@ -292,5 +414,19 @@ if (window.location.pathname === "/games.html") {
       left: isLeftClick ? offsetRight : offsetLeft,
       behavior: "smooth",
     });
+  });
+}
+
+if (window.location.pathname.startsWith("/games/")) {
+  document.addEventListener("DOMContentLoaded", async (e) => {
+    e.preventDefault();
+
+    const pathname = window.location.pathname;
+
+    try {
+      await fetchGame({ id: pathname.split("/")[2] });
+    } catch (error) {
+      console.log(error.message);
+    }
   });
 }

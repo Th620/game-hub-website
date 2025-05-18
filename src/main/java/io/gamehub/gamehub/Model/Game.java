@@ -1,7 +1,5 @@
 package io.gamehub.gamehub.Model;
 
-import java.util.List;
-
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -21,11 +19,9 @@ public class Game {
     private String title;
     private String genre;
     private String description;
-    private List<String> systemRequirements;
+    private SysRequirements system_requirements;
     private double price;
     private String img;
     @DocumentReference
     private User author;
-    private double rating;
-    private int ratingCount;
 }

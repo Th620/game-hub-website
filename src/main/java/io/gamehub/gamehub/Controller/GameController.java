@@ -1,7 +1,6 @@
 package io.gamehub.gamehub.Controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.gamehub.gamehub.Dto.GameDto;
 import io.gamehub.gamehub.Dto.RatingDto;
-import io.gamehub.gamehub.Model.Game;
 import io.gamehub.gamehub.Model.Purchase;
 import io.gamehub.gamehub.Model.Rating;
 import io.gamehub.gamehub.Service.GameService;
@@ -32,7 +31,7 @@ public class GameController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<Game>> getGames(
+    public ResponseEntity<List<GameDto>> getGames(
             @RequestParam(required = false) String genre,
             @RequestParam(required = false) String search) {
 
@@ -48,7 +47,7 @@ public class GameController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Game> getGame(@PathVariable String id) {
+    public ResponseEntity<GameDto> getGame(@PathVariable String id) {
 
         if (!ObjectId.isValid(id)) {
             ResponseEntity.badRequest().body("Invalid Id");
@@ -56,9 +55,9 @@ public class GameController {
 
         ObjectId objectId = new ObjectId(id);
 
-        Optional<Game> game = gameService.findGameById(objectId);
+        GameDto game = gameService.findGameById(objectId);
 
-        return game.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        return ResponseEntity.ok(game);
     }
 
     @PostMapping("/{id}/purchase")

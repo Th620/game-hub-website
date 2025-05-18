@@ -373,7 +373,7 @@ header nav li a:hover {
   margin-bottom: 14px;
 }
 
-#gamesContainer .gameInfo button {
+.buyBtn {
   border: none;
   padding: 4px 12px;
   color: whitesmoke;
@@ -455,14 +455,124 @@ header nav li a:hover {
   transition-duration: 100ms;
 }
 
-/* #genres .genre:hover {
-  background: #f1faf52e;
-} */
-
 #genres .active {
   background: #efb036;
   color: rgb(39, 39, 39);
+}
 
+/* GAME PAGE */
+
+#game {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #0c1c25; /* 101C23 */
+  padding-top: 52px;
+}
+
+#game .gameImg {
+  width: 100%;
+  aspect-ratio: 1/1.5;
+  background-size: cover;
+  background-position: center;
+  box-shadow: #0c1c25 0px -100px 36px -38px inset;
+}
+
+#game .infoContainer {
+  padding: 24px 24px;
+  color: whitesmoke;
+}
+
+#game .infoContainer .title {
+  font-size: 1.6rem;
+}
+#game .infoContainer .genre {
+  display: inline-block;
+  padding: 1px 10px;
+  font-size: 12px;
+  text-transform: capitalize;
+  letter-spacing: 1px;
+  border-radius: 12px;
+  background: rgba(205, 205, 205, 0.489);
+  margin-top: 8px;
+}
+#game .infoContainer .desc {
+  font-size: 14px;
+  margin-top: 12px;
+  text-align: justify;
+}
+
+#game .infoContainer .buyContainer {
+  margin-top: 32px;
+}
+
+#game .infoContainer .buyContainer p {
+  font-weight: 500;
+  font-size: 18px;
+}
+
+#game .infoContainer .buyContainer button {
+  width: 150px;
+  font-size: 16px;
+  text-align: center;
+  margin-top: 12px;
+}
+
+#game .infoContainer h3 {
+  font-size: 18px;
+  font-weight: 500;
+  margin-top: 12px;
+}
+
+#game .infoContainer .sysRequirements {
+  font-size: 14px;
+}
+
+#game .infoContainer .sysRequirements ul {
+  padding-left: 16px;
+  margin-top: 8px;
+}
+
+#game .infoContainer .sysRequirements ul li {
+  color: #efb036;
+}
+
+#game .infoContainer .sysRequirements ul li::first-letter {
+  text-transform: uppercase;
+}
+
+#game .infoContainer .sysRequirements ul li span {
+  font-weight: 500;
+  color: whitesmoke;
+}
+
+#game .infoContainer .ratingContainer {
+  margin-top: 12px;
+}
+
+#game .infoContainer .ratingContainer .rating {
+  color: #efb036;
+  font-size: 14px;
+}
+
+#game .infoContainer .ratingContainer .count {
+  color: #f5f5f580;
+  font-size: 12px;
+}
+
+#game .infoContainer .ratingContainer h3 {
+  display: inline;
+}
+
+#game .infoContainer .ratingContainer .rateBtns {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#game .infoContainer .ratingContainer button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
 }
 
 @media (min-width: 1220px) {
