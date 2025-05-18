@@ -81,6 +81,11 @@ public class GameService {
     }
 
     public Purchase addPurchase(UserDetails userDetails, ObjectId gameId) {
+
+        if (userDetails == null) {
+            throw new UnauthorizedException("Unauthorized");
+        }
+
         if (purchaseRepository.existsByGameId(gameId)) {
             throw new AlreadyExistsException("You Already Purchased this Game");
         }

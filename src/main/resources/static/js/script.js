@@ -143,7 +143,7 @@ const fetchGames = async () => {
   </span></div>
   <p>${game.description}</p>
   <span class="price">${game.price}$</span>
-  <button type="button" class="buyBtn">Buy Game</button>
+  <button type="button" id="buyBtn">Buy Game</button>
           `;
         gameElement.appendChild(gameInfo);
         gamesContainer.appendChild(gameElement);
@@ -228,6 +228,7 @@ const fetchGame = async ({ id }) => {
               },
               body: JSON.stringify({ rating }),
             });
+
             rating = index + 1;
             for (let i = 0; i <= index; i++) {
               document.getElementById(`star${i}`).style.fill = "#efb036";
@@ -269,8 +270,46 @@ const fetchGame = async ({ id }) => {
     buyContainer.classList.add("buyContainer");
     buyContainer.innerHTML = `
       <p>${game.price}$</p>
-      <button type="button" class="buyBtn">Buy Game</button>
+      <p id="msg"></p>
     `;
+
+    const buyBtn = document.createElement("button");
+    buyBtn.type = "button";
+    buyBtn.id = "buyBtn";
+    buyBtn.innerHTML = "Buy Game";
+    buyContainer.appendChild(buyBtn);
+    buyBtn.addEventListener("click", async () => {
+      try {
+        const response = await fetch(`/api/games/${id}/purchase`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (response.ok) {
+          const successMsg = document.getElementById("msg");
+          successMsg.classList.add("success");
+          successMsg.innerText = "Game purchased successfully";
+          setTimeout(() => {
+            successMsg.innerText = "";
+          }, 3000);
+        } else if (response.status == 409) {
+          var errorData = await response.json();
+          const errorMsg = document.getElementById("msg");
+          errorMsg.classList.add("error");
+          errorMsg.innerText = errorData.message;
+          setTimeout(() => {
+            errorMsg.innerText = "";
+          }, 3000);
+          return;
+        } else {
+          throw new Error(errorData.message);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    });
 
     sysRequirements.appendChild(list);
     infoContainer.appendChild(sysRequirements);
