@@ -30,4 +30,9 @@ public class PageController {
     public String GamePage() {
         return "forward:/game.html";
     }
+
+     @GetMapping("/profile")
+    public String ProfilePage() {
+        return "forward:/profile.html";
+    }
 }

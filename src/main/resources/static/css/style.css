@@ -104,6 +104,7 @@
   color: whitesmoke;
   font-weight: 500;
   border-radius: 2px;
+  background: linear-gradient(130deg, #efb036, #4c7b8b);
 }
 
 /* Home Page */
@@ -590,6 +591,63 @@ header nav li a:hover {
   color: rgb(190, 28, 28) !important;
 }
 
+/* PROFILE PAGE */
+
+.profile{
+  width: 100%;
+  min-height: 60vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile .container {
+  width: 100%;
+  color: whitesmoke;
+  font-weight: 500;
+  font-size: 14px;
+  margin-top: 32px;
+}
+
+.profile h1 {
+  margin-bottom: 16px;
+}
+
+.profile .infoContainer {
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  background: #0d3064;
+  padding: 16px;
+}
+
+.profile .info {
+  border: none;
+  outline: none;
+  padding: 8px 8px;
+  background: #2d4d7c;
+  border-radius: 2px;
+  color: whitesmoke;
+  font-size: 12px;
+}
+
+.profile #name {
+  margin-bottom: 12px;
+}
+
+.profile button {
+  width: 100%;
+  border: none;
+  padding: 8px 16px;
+  color: whitesmoke;
+  font-weight: 500;
+  font-size: 14px;
+  border-radius: 2px;
+  cursor: pointer;
+  background: #4c7b8b;
+  margin-top: 32px;
+}
+
 @media (min-width: 1220px) {
   .auth-bg div {
     width: 38%;
@@ -705,6 +763,12 @@ header nav li a:hover {
 
   .navSearch input::placeholder {
     color: #f5f5f5bd;
+  }
+
+  /* PROFILE */
+
+  .profile .container {
+    width: 38%;
   }
 }
 
@@ -824,6 +888,12 @@ header nav li a:hover {
   .navSearch input::placeholder {
     color: #f5f5f5bd;
   }
+
+  /* PROFILE */
+
+  .profile .container {
+    width: 38%;
+  }
 }
 
 @media (min-width: 680px) and (max-width: 1024px) {
@@ -937,6 +1007,12 @@ header nav li a:hover {
 
   .navSearch input::placeholder {
     color: #f5f5f5bd;
+  }
+
+  /* PROFILE */
+
+  .profile .container {
+    width: 50%;
   }
 }
 

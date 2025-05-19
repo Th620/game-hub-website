@@ -1,3 +1,13 @@
+const myGamesBtn = document.getElementById("myGamesBtn");
+myGamesBtn.addEventListener("click", () => {
+  window.location.href = "/my-games";
+});
+
+const gamesBtn = document.getElementById("gamesBtn");
+myGamesBtn.addEventListener("click", () => {
+  window.location.href = "/games";
+});
+
 // LOGIN PAGE
 if (window.location.pathname === "/login") {
   document.getElementById("loginForm").addEventListener("submit", async (e) => {
@@ -464,6 +474,38 @@ if (window.location.pathname.startsWith("/games/")) {
 
     try {
       await fetchGame({ id: pathname.split("/")[2] });
+    } catch (error) {
+      console.log(error.message);
+    }
+  });
+}
+
+const fetchProfile = async () => {
+  try {
+    const response = await fetch(`/api/users/me`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    if (response.ok) {
+      const name = document.getElementById("name");
+      const email = document.getElementById("email");
+      name.innerText = data?.name;
+      email.innerText = data?.email;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+if (window.location.pathname === "/profile") {
+  document.addEventListener("DOMContentLoaded", async (e) => {
+    e.preventDefault();
+
+    try {
+      await fetchProfile();
     } catch (error) {
       console.log(error.message);
     }
