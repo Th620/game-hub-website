@@ -1,5 +1,6 @@
 package io.gamehub.gamehub.Service;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -95,7 +96,8 @@ public class GameService {
         User user = userRepository.findByEmail(userDetails.getUsername())
                 .orElseThrow(() -> new ResourceNotFoundException("User Not Found"));
 
-        Purchase purchase = new Purchase("", user, game);
+        Purchase purchase = new Purchase(game.getPrice(), user, game);
+        purchase.setCreatedAt(Instant.now());
 
         return purchaseRepository.save(purchase);
     }

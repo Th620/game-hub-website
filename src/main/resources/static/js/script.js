@@ -1,12 +1,16 @@
 const myGamesBtn = document.getElementById("myGamesBtn");
-myGamesBtn.addEventListener("click", () => {
-  window.location.href = "/my-games";
-});
+if (myGamesBtn) {
+  myGamesBtn.addEventListener("click", () => {
+    window.location.href = "/my-games";
+  });
+}
 
 const gamesBtn = document.getElementById("gamesBtn");
-myGamesBtn.addEventListener("click", () => {
-  window.location.href = "/games";
-});
+if (gamesBtn) {
+  gamesBtn.addEventListener("click", () => {
+    window.location.href = "/games";
+  });
+}
 
 // LOGIN PAGE
 if (window.location.pathname === "/login") {
@@ -167,6 +171,142 @@ const fetchGames = async () => {
   }
 };
 
+const fetchGenres = async () => {
+  const genresContainer = document.getElementById("genres");
+
+  try {
+    const response = await fetch(`/api/games/genres`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const genres = await response.json();
+
+    if (genres.length) {
+      const params = new URLSearchParams(window.location.search);
+      genres.forEach((genre) => {
+        const genreDiv = document.createElement("button");
+        genreDiv.classList.add("genre");
+        genreDiv.id = genre;
+        genreDiv.innerText = genre;
+        genresContainer.appendChild(genreDiv);
+        genreDiv.addEventListener("click", async (e) => {
+          const genresElements = document.querySelectorAll(".genre");
+          genresElements.forEach((el) => {
+            if (el.id === genre) {
+              el.classList.contains("active")
+                ? el.classList.remove("active")
+                : el.classList.add("active");
+            } else if (el.classList.contains("active")) {
+              el.classList.remove("active");
+            }
+          });
+          if (params.get("genre") === genre) {
+            params.delete("genre");
+          } else {
+            params.set("genre", genre);
+          }
+          window.history.replaceState(null, "", `?${params}`);
+          try {
+            await fetchGames();
+          } catch (error) {
+            console.log(error.message);
+          }
+        });
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+if (search) {
+  search.addEventListener("keydown", async (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const params = new URLSearchParams(window.location.search);
+      params.set("search", search.value.trim());
+      window.location.pathname === "/games"
+        ? window.history.replaceState(null, "", `?${params}`)
+        : (window.location.href = `/games?${params}`);
+
+      navSearch.value = params.get("search");
+      try {
+        await fetchGames();
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+  });
+}
+
+navSearch.addEventListener("keydown", async (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    const params = new URLSearchParams(window.location.search);
+    params.set("search", navSearch.value.trim());
+
+    window.location.pathname === "/games"
+      ? window.history.replaceState(null, "", `?${params}`)
+      : (window.location.href = `/games?${params}`);
+
+    search.value = params.get("search");
+
+    try {
+      await fetchGames();
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+});
+
+if (window.location.pathname === "/games") {
+  search.value = params.get("search");
+  navSearch.value = params.get("search");
+
+  document.addEventListener("DOMContentLoaded", async (e) => {
+    e.preventDefault();
+
+    try {
+      await fetchGenres();
+      await fetchGames();
+
+      const activeGenre = document.getElementById(params.get("genre"));
+
+      if (activeGenre) {
+        activeGenre.classList.add("active");
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  });
+
+  const genresContainer = document.getElementById("genres");
+  genresContainer.addEventListener("click", (e) => {
+    const clicked = e.target.closest(".genre");
+
+    if (!clicked || !genresContainer.contains(clicked)) return;
+
+    const containerRect = genresContainer.getBoundingClientRect();
+
+    const isLeftClick =
+      e.clientX < containerRect.left + containerRect.width / 2;
+
+    const offsetLeft = clicked.offsetLeft - 50;
+    const offsetRight =
+      offsetLeft - genresContainer.clientWidth + clicked.offsetWidth;
+
+    genresContainer.scrollTo({
+      left: isLeftClick ? offsetRight : offsetLeft,
+      behavior: "smooth",
+    });
+  });
+}
+
+// GAME PAGE
+
 const fetchGame = async ({ id }) => {
   const gameContainer = document.getElementById("gameContainer");
 
@@ -178,7 +318,14 @@ const fetchGame = async ({ id }) => {
       },
     });
 
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message);
+    }
+
     const game = await response.json();
+
+    document.title = game.title || "Games";
 
     const imgContainer = document.createElement("div");
     imgContainer.classList.add("gameImg");
@@ -332,140 +479,6 @@ const fetchGame = async ({ id }) => {
   }
 };
 
-const fetchGenres = async () => {
-  const genresContainer = document.getElementById("genres");
-
-  try {
-    const response = await fetch(`/api/games/genres`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    const genres = await response.json();
-
-    if (genres.length) {
-      const params = new URLSearchParams(window.location.search);
-      genres.forEach((genre) => {
-        const genreDiv = document.createElement("button");
-        genreDiv.classList.add("genre");
-        genreDiv.id = genre;
-        genreDiv.innerText = genre;
-        genresContainer.appendChild(genreDiv);
-        genreDiv.addEventListener("click", async (e) => {
-          const genresElements = document.querySelectorAll(".genre");
-          genresElements.forEach((el) => {
-            if (el.id === genre) {
-              el.classList.contains("active")
-                ? el.classList.remove("active")
-                : el.classList.add("active");
-            } else if (el.classList.contains("active")) {
-              el.classList.remove("active");
-            }
-          });
-          if (params.get("genre") === genre) {
-            params.delete("genre");
-          } else {
-            params.set("genre", genre);
-          }
-          window.history.replaceState(null, "", `?${params}`);
-          try {
-            await fetchGames();
-          } catch (error) {
-            console.log(error.message);
-          }
-        });
-      });
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-if (search) {
-  search.addEventListener("keydown", async (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      const params = new URLSearchParams(window.location.search);
-      params.set("search", search.value.trim());
-      window.location.pathname === "/games"
-        ? window.history.replaceState(null, "", `?${params}`)
-        : (window.location.href = `/games?${params}`);
-
-      navSearch.value = params.get("search");
-      try {
-        await fetchGames();
-      } catch (error) {
-        console.log(error.message);
-      }
-    }
-  });
-}
-
-navSearch.addEventListener("keydown", async (e) => {
-  if (e.key === "Enter") {
-    e.preventDefault();
-    const params = new URLSearchParams(window.location.search);
-    params.set("search", navSearch.value.trim());
-
-    window.location.pathname === "/games"
-      ? window.history.replaceState(null, "", `?${params}`)
-      : (window.location.href = `/games?${params}`);
-
-    search.value = params.get("search");
-
-    try {
-      await fetchGames();
-    } catch (error) {
-      console.log(error.message);
-    }
-  }
-});
-
-if (window.location.pathname === "/games") {
-  search.value = params.get("search");
-  navSearch.value = params.get("search");
-
-  document.addEventListener("DOMContentLoaded", async (e) => {
-    e.preventDefault();
-
-    try {
-      await fetchGenres();
-      await fetchGames();
-
-      const activeGenre = document.getElementById(params.get("genre"));
-
-      if (activeGenre) {
-        activeGenre.classList.add("active");
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
-  });
-
-  const genresContainer = document.getElementById("genres");
-  genresContainer.addEventListener("click", (e) => {
-    const clicked = e.target.closest(".genre");
-
-    if (!clicked || !genresContainer.contains(clicked)) return;
-
-    const containerRect = genresContainer.getBoundingClientRect();
-
-    const isLeftClick =
-      e.clientX < containerRect.left + containerRect.width / 2;
-
-    const offsetLeft = clicked.offsetLeft - 50;
-    const offsetRight =
-      offsetLeft - genresContainer.clientWidth + clicked.offsetWidth;
-
-    genresContainer.scrollTo({
-      left: isLeftClick ? offsetRight : offsetLeft,
-      behavior: "smooth",
-    });
-  });
-}
-
 if (window.location.pathname.startsWith("/games/")) {
   document.addEventListener("DOMContentLoaded", async (e) => {
     e.preventDefault();
@@ -479,6 +492,8 @@ if (window.location.pathname.startsWith("/games/")) {
     }
   });
 }
+
+// PROFILE PAGE
 
 const fetchProfile = async () => {
   try {
@@ -494,6 +509,8 @@ const fetchProfile = async () => {
       const email = document.getElementById("email");
       name.innerText = data?.name;
       email.innerText = data?.email;
+    } else {
+      throw new Error(data.message);
     }
   } catch (error) {
     console.log(error);
@@ -506,6 +523,58 @@ if (window.location.pathname === "/profile") {
 
     try {
       await fetchProfile();
+    } catch (error) {
+      console.log(error.message);
+    }
+  });
+}
+
+// PURCHASE LOG PAGE
+
+const fetchPurchaseLog = async () => {
+  try {
+    const response = await fetch(`/api/users/purchases`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const logs = await response.json();
+    if (response.ok) {
+      const logsContainer = document.getElementById("logsContainer");
+      logs.forEach((log) => {
+        const logContainer = document.createElement("div");
+        logContainer.classList.add("log");
+        logContainer.innerHTML = `
+        <div class="gameImg">
+        <img src="${`uploads/${log?.game?.img}`}" alt="game img" />
+        </div>
+        <div class="logInfo">
+        <h3>${log?.game?.title}</h3>
+        <div class="price"><span>Price :</span> ${log?.game?.price}$</</div>
+        <div class="date"><span>Date :</span> ${new Date(
+          log?.createdAt
+        ).toLocaleDateString().replace(/\//g, ".")}</</div>
+        <a href="/games/${log?.game?.id}">View Game</a>
+        </div>
+        `;
+        logsContainer.appendChild(logContainer);
+      });
+    } else {
+      throw new Error(data.message);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+if (window.location.pathname === "/purchase-log") {
+  document.addEventListener("DOMContentLoaded", async (e) => {
+    e.preventDefault();
+
+    try {
+      await fetchPurchaseLog();
     } catch (error) {
       console.log(error.message);
     }

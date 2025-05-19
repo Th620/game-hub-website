@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.gamehub.gamehub.Model.Purchase;
+import io.gamehub.gamehub.Dto.PurchaseDto;
 import io.gamehub.gamehub.Model.User;
 import io.gamehub.gamehub.Service.UserService;
 
@@ -40,8 +40,8 @@ public class UserController {
     }
 
     @GetMapping("/purchases")
-    public ResponseEntity<List<Purchase>> getPurchaseLog(@AuthenticationPrincipal UserDetails userDetails) {
-        List<Purchase> purchases = userService.getPurchaseLog(userDetails);
+    public ResponseEntity<List<PurchaseDto>> getPurchaseLog(@AuthenticationPrincipal UserDetails userDetails) {
+        List<PurchaseDto> purchases = userService.getPurchaseLog(userDetails);
         return ResponseEntity.ok(purchases);
     }
 }

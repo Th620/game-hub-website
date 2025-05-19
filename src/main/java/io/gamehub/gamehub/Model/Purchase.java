@@ -1,5 +1,7 @@
 package io.gamehub.gamehub.Model;
 
+import java.time.Instant;
+
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -16,14 +18,15 @@ import lombok.NoArgsConstructor;
 public class Purchase {
     @Id
     private ObjectId id;
-    private String paymentMethod;
+    private double amount;
     @DocumentReference
     private User user;
     @DocumentReference
     private Game game;
+    private Instant createdAt;
 
-    public Purchase(String paymentMethod, User user, Game game) {
-        this.paymentMethod = paymentMethod;
+    public Purchase(double amount, User user, Game game) {
+        this.amount = amount;
         this.user = user;
         this.game = game;
     }

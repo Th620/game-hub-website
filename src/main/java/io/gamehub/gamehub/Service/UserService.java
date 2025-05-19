@@ -2,10 +2,13 @@ package io.gamehub.gamehub.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import io.gamehub.gamehub.Dto.GameDto;
+import io.gamehub.gamehub.Dto.PurchaseDto;
 import io.gamehub.gamehub.Exception.ResourceNotFoundException;
 import io.gamehub.gamehub.Model.Purchase;
 import io.gamehub.gamehub.Model.User;
@@ -27,13 +30,15 @@ public class UserService {
         user.ifPresent(userRepository::delete);
     }
 
-    public List<Purchase> getPurchaseLog(UserDetails userDetails) {
+    public List<PurchaseDto> getPurchaseLog(UserDetails userDetails) {
         User user = userRepository.findByEmail(userDetails.getUsername())
                 .orElseThrow(() -> new ResourceNotFoundException("User Not Found"));
 
         List<Purchase> purchases = purchaseRepository.findByUserId(user.getId());
 
-        return purchases;
+        return purchases.stream().map(purchase -> {
+            return new PurchaseDto(purchase, new GameDto(purchase.getGame()));
+        }).collect(Collectors.toList());
     }
 
 }

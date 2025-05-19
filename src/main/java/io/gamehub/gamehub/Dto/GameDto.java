@@ -29,4 +29,11 @@ public class GameDto {
         this.rating = rating;
         this.rating_count = rating_count;
     }
+
+    public GameDto(Game game) {
+        this.id = game.getId().toString();
+        this.title = game.getTitle();
+        this.price = game.getPrice();
+        this.img = game.getImg();
+    }
 }

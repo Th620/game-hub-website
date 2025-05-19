@@ -593,7 +593,7 @@ header nav li a:hover {
 
 /* PROFILE PAGE */
 
-.profile{
+.profile {
   width: 100%;
   min-height: 60vh;
   display: flex;
@@ -646,6 +646,85 @@ header nav li a:hover {
   cursor: pointer;
   background: #4c7b8b;
   margin-top: 32px;
+}
+
+/* LOGS PAGE */
+
+.logs {
+  width: 100%;
+  min-height: 100vh;
+  background-image: url("../images/bg-dark.jpg");
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+  background-color: #4c7b8b;
+  padding: 52px 24px 0px 24px;
+}
+
+#logsContainer {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  column-gap: 16px;
+  row-gap: 16px;
+  color: whitesmoke;
+  padding: 24px 0px;
+}
+
+#logsContainer .log {
+  display: flex;
+  height: 136px;
+  grid-column: span 6 / span 6;
+  background: #11121730;
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0px 0px 10px 10px #6e6e6e25;
+}
+
+#logsContainer .gameImg {
+  height: 100%;
+}
+
+#logsContainer .gameImg img {
+  height: 100%;
+  object-fit: cover;
+}
+
+#logsContainer .logInfo {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 12px 16px;
+}
+
+#logsContainer .logInfo h3 {
+  width: 100%;
+}
+
+#logsContainer .logInfo .price {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+#logsContainer .logInfo .price span {
+  color: rgba(205, 205, 205, 0.7);
+}
+
+#logsContainer .logInfo .date {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+#logsContainer .logInfo .date span {
+  color: rgba(205, 205, 205, 0.7);
+}
+
+#logsContainer .logInfo a {
+  display: block;
+  text-decoration: none;
+  color: #efb036;
+  margin-top: 16px;
 }
 
 @media (min-width: 1220px) {
@@ -769,6 +848,16 @@ header nav li a:hover {
 
   .profile .container {
     width: 38%;
+  }
+
+  /* LOGS PAGE */
+
+  .logs {
+    padding: 64px 64px 0px 64px;
+  }
+
+  #logsContainer .log {
+    grid-column: span 2 / span 2;
   }
 }
 
@@ -894,6 +983,16 @@ header nav li a:hover {
   .profile .container {
     width: 38%;
   }
+
+   /* LOGS PAGE */
+
+  .logs {
+    padding: 64px 64px 0px 64px;
+  }
+
+  #logsContainer .log {
+    grid-column: span 2 / span 2;
+  }
 }
 
 @media (min-width: 680px) and (max-width: 1024px) {
@@ -1013,6 +1112,17 @@ header nav li a:hover {
 
   .profile .container {
     width: 50%;
+  }
+
+  
+   /* LOGS PAGE */
+
+  .logs {
+    padding: 64px 64px 0px 64px;
+  }
+
+  #logsContainer .log {
+    grid-column: span 3 / span 3;
   }
 }
 

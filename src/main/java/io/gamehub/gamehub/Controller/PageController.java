@@ -35,4 +35,9 @@ public class PageController {
     public String ProfilePage() {
         return "forward:/profile.html";
     }
+
+     @GetMapping("/purchase-log")
+    public String PurchaseLog() {
+        return "forward:/purchase-log.html";
+    }
 }
