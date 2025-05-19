@@ -61,7 +61,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/logout")
-    public String logout(@RequestBody LoginUserDto loginUserDto, HttpServletResponse response) {
+    public String logout(HttpServletResponse response) {
 
         Cookie cookie = new Cookie("jwt", null);
         cookie.setHttpOnly(true);

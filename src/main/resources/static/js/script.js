@@ -84,14 +84,30 @@ if (window.location.pathname === "/signup") {
 const menu = document.getElementById("menu");
 const profile = document.getElementById("profile");
 const balance = document.getElementById("balance");
+const loginBtnContainer = document.getElementById("loginBtnContainer");
+const loginBtn = document.getElementById("loginBtn");
+
+const balanceContainer = document.getElementById("balanceContainer");
+
+if (loginBtnContainer) {
+  loginBtn.addEventListener("click", () => {
+    window.location.href = "/login";
+  });
+}
 
 const value = JSON.parse(localStorage.getItem("u"));
 
-if (balance) {
-  balance.innerText = value?.balance ||0;
+if (!value && (profile || balanceContainer)) {
+  balanceContainer.classList.add(".hide")
+} else if (loginBtnContainer && value) {
+  loginBtnContainer.classList.add(".hide")
 }
 
-if (profile) {
+if (balance && value) {
+  balance.innerText = value?.balance || 0;
+}
+
+if (profile && value) {
   profile.addEventListener("click", () => {
     window.location.href = "/profile";
   });
@@ -100,6 +116,13 @@ if (profile) {
     .map((str) => str[0])
     .join("");
 }
+
+// if (
+//   (window.location.href === "/login" || window.location.href === "/signup") &&
+//   !value
+// ) {
+//   window.location.href = "/";
+// }
 
 // GAMES PAGE
 
@@ -247,25 +270,27 @@ if (search) {
   });
 }
 
-navSearch.addEventListener("keydown", async (e) => {
-  if (e.key === "Enter") {
-    e.preventDefault();
-    const params = new URLSearchParams(window.location.search);
-    params.set("search", navSearch.value.trim());
+if (navSearch) {
+  navSearch.addEventListener("keydown", async (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const params = new URLSearchParams(window.location.search);
+      params.set("search", navSearch.value.trim());
 
-    window.location.pathname === "/games"
-      ? window.history.replaceState(null, "", `?${params}`)
-      : (window.location.href = `/games?${params}`);
+      window.location.pathname === "/games"
+        ? window.history.replaceState(null, "", `?${params}`)
+        : (window.location.href = `/games?${params}`);
 
-    search.value = params.get("search");
+      search.value = params.get("search");
 
-    try {
-      await fetchGames();
-    } catch (error) {
-      console.log(error.message);
+      try {
+        await fetchGames();
+      } catch (error) {
+        console.log(error.message);
+      }
     }
-  }
-});
+  });
+}
 
 if (window.location.pathname === "/games") {
   search.value = params.get("search");
@@ -525,6 +550,26 @@ const fetchProfile = async () => {
       name.innerText = data?.name;
       email.innerText = data?.email;
     } else {
+      window.location.href = "/";
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const logout = async () => {
+  try {
+    const response = await fetch(`/api/auth/logout`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    if (response.ok) {
+      localStorage.clear();
+      window.location.href = "/";
+    } else {
       throw new Error(data.message);
     }
   } catch (error) {
@@ -535,9 +580,17 @@ const fetchProfile = async () => {
 if (window.location.pathname === "/profile") {
   document.addEventListener("DOMContentLoaded", async (e) => {
     e.preventDefault();
-
     try {
       await fetchProfile();
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  });
+
+  const logoutBtn = document.getElementById("logout");
+  logoutBtn.addEventListener("click", async () => {
+    try {
+      await logout();
     } catch (error) {
       console.log(error.message);
     }
@@ -556,8 +609,8 @@ const fetchPurchaseLog = async () => {
     });
 
     const logs = await response.json();
-    if (response.ok) {
-      const logsContainer = document.getElementById("logsContainer");
+    const logsContainer = document.getElementById("logsContainer");
+    if (response.ok && logs.length) {
       logs.forEach((log) => {
         const logContainer = document.createElement("div");
         logContainer.classList.add("log");
@@ -576,6 +629,27 @@ const fetchPurchaseLog = async () => {
         `;
         logsContainer.appendChild(logContainer);
       });
+    } else if (response.status == 401) {
+      const loginBtn = document.createElement("button");
+      loginBtn.type = "button";
+      loginBtn.classList.add("loginBtn");
+      loginBtn.innerText = "Log in";
+      loginBtn.addEventListener("click", () => {
+        window.location.href = "/login";
+      });
+      logsContainer.appendChild(loginBtn);
+    } else if (!logs.length) {
+      const gamesBtn = document.createElement("button");
+      const note = document.createElement("span");
+      note.classList.add("note");
+      note.innerText = "Not games yet";
+      gamesBtn.type = "button";
+      gamesBtn.classList.add("gamesBtn");
+      gamesBtn.innerText = "Add Games";
+      gamesBtn.addEventListener("click", () => {
+        window.location.href = "/login";
+      });
+      logsContainer.appendChild(gamesBtn);
     } else {
       throw new Error(data.message);
     }

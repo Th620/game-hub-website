@@ -12,9 +12,9 @@
         <nav>
           <a href="/" class="logo">GAME<span>HUB</span></a>
           <ul>
-           <li><a href="/">Home</a></li>
-          <li><a href="/games">Games</a></li>
-          <li><a href="/purchase-log">My Games</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/games">Games</a></li>
+            <li><a href="/purchase-log">My Games</a></li>
             <li>
               <form class="navSearch">
                 <input
@@ -27,11 +27,14 @@
             </li>
           </ul>
           <div class="profile-info">
-            <div class="balance-container">
+            <div id="balanceContainer">
               <div class="coin"></div>
               <p id="balance"></p>
             </div>
             <button type="button" id="profile"></button>
+          </div>
+          <div id="loginBtnContainer">
+            <button type="button" id="loginBtn">Log in</button>
           </div>
         </nav>
       </header>
@@ -39,11 +42,13 @@
         <div class="container">
           <h1>Profile</h1>
           <div class="infoContainer">
-          <span for="name">Name:</span>
-          <div id="name" class="info"></div>
-          <span for="email">Email:</span>
-          <div id="email" class="info"></div></div>
+            <span for="name">Name:</span>
+            <div id="name" class="info"></div>
+            <span for="email">Email:</span>
+            <div id="email" class="info"></div>
+          </div>
 
+          <button type="button" id="logout">Log out</button>
           <button type="button" id="myGamesBtn">My Games</button>
         </div>
       </div>

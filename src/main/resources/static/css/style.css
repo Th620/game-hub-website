@@ -7,6 +7,17 @@
   font-family: "Poppins", sans-serif;
 }
 
+#loginBtn {
+  padding: 3px 16px;
+  background: #efb036;
+  border-radius: 2px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: whitesmoke;
+}
+
 /* Login / Sign up Pages */
 
 .auth-bg {
@@ -189,7 +200,7 @@ header nav li a:hover {
   column-gap: 8px;
 }
 
-.balance-container {
+.balanceContainer {
   height: 26px;
   display: flex;
   align-items: center;
@@ -648,6 +659,15 @@ header nav li a:hover {
   margin-top: 32px;
 }
 
+.profile #logout {
+  padding: 0;
+  color: rgb(190, 28, 28);
+  text-decoration: underline;
+  background: transparent;
+  width: fit-content;
+  margin-top: 4px;
+}
+
 /* LOGS PAGE */
 
 .logs {
@@ -984,7 +1004,7 @@ header nav li a:hover {
     width: 38%;
   }
 
-   /* LOGS PAGE */
+  /* LOGS PAGE */
 
   .logs {
     padding: 64px 64px 0px 64px;
@@ -1114,8 +1134,7 @@ header nav li a:hover {
     width: 50%;
   }
 
-  
-   /* LOGS PAGE */
+  /* LOGS PAGE */
 
   .logs {
     padding: 64px 64px 0px 64px;
