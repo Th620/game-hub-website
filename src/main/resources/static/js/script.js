@@ -32,7 +32,10 @@ if (window.location.pathname === "/login") {
       const data = await response.json();
 
       if (response.ok) {
-        localStorage.setItem("u", JSON.stringify({ name: data.name }));
+        localStorage.setItem(
+          "u",
+          JSON.stringify({ name: data.name, balance: data.balance })
+        );
         window.location.href = "/";
       }
     } catch (error) {
@@ -64,7 +67,10 @@ if (window.location.pathname === "/signup") {
         const data = await response.json();
 
         if (response.ok) {
-          localStorage.setItem("u", JSON.stringify({ name: data.name }));
+          localStorage.setItem(
+            "u",
+            JSON.stringify({ name: data.name, balance: data.balance })
+          );
           window.location.href = "/";
         }
       } catch (error) {
@@ -79,19 +85,20 @@ const menu = document.getElementById("menu");
 const profile = document.getElementById("profile");
 const balance = document.getElementById("balance");
 
-balance.innerText = "1200";
-
 const value = JSON.parse(localStorage.getItem("u"));
 
-profile.innerText = value.name
-  .split(" ")
-  .map((str) => str[0])
-  .join("");
+if (balance) {
+  balance.innerText = value?.balance ||0;
+}
 
 if (profile) {
   profile.addEventListener("click", () => {
     window.location.href = "/profile";
   });
+  profile.innerText = value.name
+    .split(" ")
+    .map((str) => str[0])
+    .join("");
 }
 
 // GAMES PAGE
@@ -449,8 +456,17 @@ const fetchGame = async ({ id }) => {
           setTimeout(() => {
             successMsg.innerText = "";
           }, 3000);
-        } else if (response.status == 409) {
-          var errorData = await response.json();
+        } else if (response.status === 409) {
+          const errorData = await response.json();
+          const errorMsg = document.getElementById("msg");
+          errorMsg.classList.add("error");
+          errorMsg.innerText = errorData.message;
+          setTimeout(() => {
+            errorMsg.innerText = "";
+          }, 3000);
+          return;
+        } else if (response.status === 400) {
+          const errorData = await response.json();
           const errorMsg = document.getElementById("msg");
           errorMsg.classList.add("error");
           errorMsg.innerText = errorData.message;
@@ -459,6 +475,7 @@ const fetchGame = async ({ id }) => {
           }, 3000);
           return;
         } else {
+          const errorData = await response.json();
           throw new Error(errorData.message);
         }
       } catch (error) {

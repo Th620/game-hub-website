@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import io.gamehub.gamehub.Dto.GameDto;
 import io.gamehub.gamehub.Exception.AlreadyExistsException;
+import io.gamehub.gamehub.Exception.BadRequestException;
 import io.gamehub.gamehub.Exception.ResourceNotFoundException;
 import io.gamehub.gamehub.Exception.UnauthorizedException;
 import io.gamehub.gamehub.Model.Game;
@@ -95,6 +96,10 @@ public class GameService {
 
         User user = userRepository.findByEmail(userDetails.getUsername())
                 .orElseThrow(() -> new ResourceNotFoundException("User Not Found"));
+
+        if (user.getBalance() < game.getPrice()) {
+            throw new BadRequestException("You don't have enought balance");
+        }
 
         Purchase purchase = new Purchase(game.getPrice(), user, game);
         purchase.setCreatedAt(Instant.now());
