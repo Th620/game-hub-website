@@ -676,8 +676,9 @@ const fetchPurchaseLog = async () => {
       gamesBtn.classList.add("gamesBtn");
       gamesBtn.innerText = "Add Games";
       gamesBtn.addEventListener("click", () => {
-        window.location.href = "/login";
+        window.location.href = "/games";
       });
+      logsContainer.appendChild(note);
       logsContainer.appendChild(gamesBtn);
     } else {
       throw new Error(data.message);

@@ -781,6 +781,11 @@ header nav li a:hover {
   border-radius: 2px;
 }
 
+#logsContainer .note {
+  grid-column: span 6 / span 6;
+  text-align: center;
+}
+
 @media (min-width: 1220px) {
   .auth-bg div {
     width: 38%;
@@ -1196,6 +1201,11 @@ header nav li a:hover {
   background: #efb036;
   border: none;
   border-radius: 2px;
+}
+
+#logsContainer .note {
+  grid-column: span 6 / span 6;
+  text-align: center;
 }
 }
 
