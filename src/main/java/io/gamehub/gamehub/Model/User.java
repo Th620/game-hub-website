@@ -23,6 +23,7 @@ public class User implements UserDetails {
     private String name;
     private String email;
     private String password;
+    private double balance;
 
     public ObjectId getId() {
         return id;
@@ -58,9 +59,10 @@ public class User implements UserDetails {
         return true;
     }
 
-    public User(String name, String email, String password){
+    public User(String name, String email, String password, double balance) {
         this.name = name;
-        this.email =email;
+        this.email = email;
         this.password = password;
+        this.balance = balance;
     }
 }
