@@ -678,7 +678,7 @@ header nav li a:hover {
   display: block;
 }
 
-.hide{
+.hide {
   display: none;
 }
 
@@ -759,6 +759,26 @@ header nav li a:hover {
   text-decoration: none;
   color: #efb036;
   margin-top: 16px;
+}
+
+#logsContainer .loginBtn {
+  grid-column: span 6 / span 6;
+  width: 50%;
+  justify-self: center;
+  padding: 8px 16px;
+  background: #efb036;
+  border: none;
+  border-radius: 2px;
+}
+
+#logsContainer .gamesBtn {
+  grid-column: span 6 / span 6;
+  width: 50%;
+  justify-self: center;
+  padding: 8px 16px;
+  background: #efb036;
+  border: none;
+  border-radius: 2px;
 }
 
 @media (min-width: 1220px) {
@@ -1157,6 +1177,26 @@ header nav li a:hover {
   #logsContainer .log {
     grid-column: span 3 / span 3;
   }
+
+  #logsContainer .loginBtn {
+  grid-column: span 6 / span 6;
+  width: 30%;
+  justify-self: center;
+  padding: 8px 16px;
+  background: #efb036;
+  border: none;
+  border-radius: 2px;
+}
+
+#logsContainer .gamesBtn {
+  grid-column: span 6 / span 6;
+  width: 30%;
+  justify-self: center;
+  padding: 8px 16px;
+  background: #efb036;
+  border: none;
+  border-radius: 2px;
+}
 }
 
 @media (min-width: 680px) {

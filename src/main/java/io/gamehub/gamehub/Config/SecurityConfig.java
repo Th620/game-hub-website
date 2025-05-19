@@ -35,6 +35,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/**").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/login").permitAll()
+                        .requestMatchers("/signup").permitAll()
+                        .requestMatchers("/").permitAll()
                         .anyRequest().permitAll())
                 // .formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/",
                 // true).permitAll())

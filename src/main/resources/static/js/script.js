@@ -567,7 +567,7 @@ const logout = async () => {
     });
     const data = await response.json();
     if (response.ok) {
-      localStorage.clear();
+      localStorage.removeItem("u");
       window.location.href = "/";
     } else {
       throw new Error(data.message);
@@ -587,7 +587,7 @@ const deleteAccount = async () => {
     });
     const data = await response.json();
     if (response.ok) {
-      localStorage.clear();
+      localStorage.removeItem("u");
       window.location.href = "/";
     } else {
       throw new Error(data.message);

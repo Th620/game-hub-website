@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import io.gamehub.gamehub.Dto.GameDto;
 import io.gamehub.gamehub.Dto.PurchaseDto;
 import io.gamehub.gamehub.Exception.ResourceNotFoundException;
+import io.gamehub.gamehub.Exception.UnauthorizedException;
 import io.gamehub.gamehub.Model.Purchase;
 import io.gamehub.gamehub.Model.User;
 import io.gamehub.gamehub.Repository.PurchaseRepository;
@@ -31,6 +32,11 @@ public class UserService {
     }
 
     public List<PurchaseDto> getPurchaseLog(UserDetails userDetails) {
+
+        if (userDetails == null) {
+            throw new UnauthorizedException("User not found");
+        }
+
         User user = userRepository.findByEmail(userDetails.getUsername())
                 .orElseThrow(() -> new ResourceNotFoundException("User Not Found"));
 
