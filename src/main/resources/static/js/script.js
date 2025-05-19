@@ -1,7 +1,7 @@
 const myGamesBtn = document.getElementById("myGamesBtn");
 if (myGamesBtn) {
   myGamesBtn.addEventListener("click", () => {
-    window.location.href = "/my-games";
+    window.location.href = "/purchase-log";
   });
 }
 
@@ -88,13 +88,11 @@ profile.innerText = value.name
   .map((str) => str[0])
   .join("");
 
-profile.addEventListener("click", () => {
-  if (menu.classList.contains("hide")) {
-    menu.classList.remove("hide");
-  } else {
-    menu.classList.add("hide");
-  }
-});
+if (profile) {
+  profile.addEventListener("click", () => {
+    window.location.href = "/profile";
+  });
+}
 
 // GAMES PAGE
 
@@ -553,9 +551,9 @@ const fetchPurchaseLog = async () => {
         <div class="logInfo">
         <h3>${log?.game?.title}</h3>
         <div class="price"><span>Price :</span> ${log?.game?.price}$</</div>
-        <div class="date"><span>Date :</span> ${new Date(
-          log?.createdAt
-        ).toLocaleDateString().replace(/\//g, ".")}</</div>
+        <div class="date"><span>Date :</span> ${new Date(log?.createdAt)
+          .toLocaleDateString()
+          .replace(/\//g, ".")}</</div>
         <a href="/games/${log?.game?.id}">View Game</a>
         </div>
         `;

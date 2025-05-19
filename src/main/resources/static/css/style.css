@@ -278,11 +278,11 @@ header nav li a:hover {
   cursor: pointer;
 }
 
-.hero .btns-container #games-btn {
+.hero .btns-container #gamesBtn {
   background: linear-gradient(130deg, #efb036, #4c7b8b);
 }
 
-.hero .btns-container #my-games-btn {
+.hero .btns-container #myGamesBtn {
   background: transparent;
   text-decoration: underline;
 }
