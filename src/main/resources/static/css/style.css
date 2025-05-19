@@ -587,7 +587,7 @@ header nav li a:hover {
 }
 
 #game .infoContainer .buyContainer .error {
-  color: rgb(245, 52, 52) !important;
+  color: rgb(190, 28, 28) !important;
 }
 
 @media (min-width: 1220px) {
@@ -937,6 +937,45 @@ header nav li a:hover {
 
   .navSearch input::placeholder {
     color: #f5f5f5bd;
+  }
+}
+
+@media (min-width: 680px) {
+  /* GAME PAGE */
+
+  #game {
+    width: 100%;
+    background-color: #0c1c25; /* 101C23 */
+    padding: 64px;
+  }
+
+  #game #gameContainer {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #0c1c25; /* 101C23 */
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    column-gap: 50px;
+  }
+
+  #game .gameImg {
+    grid-column: span 2 / span 2;
+    aspect-ratio: 1/1.5;
+    background-size: cover;
+    background-position: center;
+    box-shadow: #0c1c25 0px -100px 36px -38px inset,
+      #0c1c25 0px 50px 36px -38px inset;
+  }
+
+  #game .infoContainer {
+    grid-column: span 3 / span 3;
+    padding: 24px 0px;
+    color: whitesmoke;
+    height: 100%;
+  }
+
+  #game .infoContainer .buyContainer {
+    margin-top: 64px;
   }
 }
 
