@@ -200,7 +200,7 @@ header nav li a:hover {
   column-gap: 8px;
 }
 
-.balanceContainer {
+#balanceContainer {
   height: 26px;
   display: flex;
   align-items: center;
@@ -666,6 +666,20 @@ header nav li a:hover {
   background: transparent;
   width: fit-content;
   margin-top: 4px;
+}
+
+.profile #delete {
+  padding: 0;
+  color: rgb(190, 28, 28);
+  text-decoration: underline;
+  background: transparent;
+  width: fit-content;
+  margin-top: 4px;
+  display: block;
+}
+
+.hide{
+  display: none;
 }
 
 /* LOGS PAGE */

@@ -577,6 +577,26 @@ const logout = async () => {
   }
 };
 
+const deleteAccount = async () => {
+  try {
+    const response = await fetch(`/api/users`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    if (response.ok) {
+      localStorage.clear();
+      window.location.href = "/";
+    } else {
+      throw new Error(data.message);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 if (window.location.pathname === "/profile") {
   document.addEventListener("DOMContentLoaded", async (e) => {
     e.preventDefault();
@@ -591,6 +611,15 @@ if (window.location.pathname === "/profile") {
   logoutBtn.addEventListener("click", async () => {
     try {
       await logout();
+    } catch (error) {
+      console.log(error.message);
+    }
+  });
+
+  const deleteBtn = document.getElementById("delete");
+  deleteBtn.addEventListener("click", async () => {
+    try {
+      await deleteAccount();
     } catch (error) {
       console.log(error.message);
     }
